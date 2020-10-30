@@ -112,7 +112,7 @@ def invalid_form():
 
 kv = Builder.load_file("my.kv")
 sm = WindowManager()
-db = DataBase("artists.pickle")
+db = DataBase("db/artists.pickle")
 
 available_screens = [ActionOptionsWindow(name="options"), AddArtistWindow(name="add_artist"), ShowArtistWindow(name="show_artist")]
 for screen in available_screens:

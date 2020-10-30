@@ -49,7 +49,7 @@ class DataBase:
             return -1
 
     def save(self):
-        self.save_object_pickle(self.artists, "artists.pickle")
+        self.save_object_pickle(self.artists, "db/artists.pickle")
 
         #with open(self.filename, "w") as f:
         #    for artist in self.artists:
