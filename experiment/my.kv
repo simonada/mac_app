@@ -1,0 +1,212 @@
+#:import C kivy.utils.get_color_from_hex
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<BackgroundLabel@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+
+<CLabel@Label>:
+    color: 0,0,0,1
+    size_hint_y: None
+    height: 40
+
+<CButton>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: C("#455A64") if self.state == "normal" else (0.26,0.26,0.26,0.85)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 10,10,10,10
+    size_hint: 1.0,None
+    height: 40
+
+<Box@GridLayout>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+    size_hint: 0.8,None
+    height: self.minimum_height
+
+<ActionOptionsWindow>:
+    name: "options"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'flowers.jpg'
+
+    FloatLayout:
+        cols:1
+
+        Button:
+            pos_hint:{"x":0.2,"y":0.25}
+            size_hint: 0.6, 0.15
+            font_size: (root.width**2 + root.height**2) / 14**4
+            text: "Add artist"
+            on_release:
+                root.manager.transition.direction = "left"
+                root.add_artist_btn()
+
+        Button:
+            pos_hint:{"x":0.2,"y":0.05}
+            size_hint: 0.6, 0.15
+            text: "Explore"
+            font_size: (root.width**2 + root.height**2) / 14**4
+
+<AddArtistWindow>:
+    name: "add_artist"
+
+    artist_name:artist_name
+    location:location
+
+    GridLayout:
+        cols:1
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            Label:
+                text: "Add an Artist"
+                size_hint: 0.8, 0.2
+                pos_hint: {"x":0.1, "top":1}
+                font_size: (root.width**2 + root.height**2) / 14**4
+
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8}
+                text: "Artist Name: "
+                font_size: (root.width**2 + root.height**2) / 14**4
+
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8}
+                size_hint: 0.4, 0.12
+                id: artist_name
+                multiline: False
+                font_size: (root.width**2 + root.height**2) / 14**4
+
+            Label:
+                size_hint: 0.5,0.12
+                pos_hint: {"x":0, "top":0.8-0.13}
+                text: "Location: "
+                font_size: (root.width**2 + root.height**2) / 14**4
+
+            TextInput:
+                pos_hint: {"x":0.5, "top":0.8-0.13}
+                size_hint: 0.4, 0.12
+                id: location
+                multiline: False
+                font_size: (root.width**2 + root.height**2) / 14**4
+
+        Button:
+            pos_hint:{"x":0.5,"y":0.05}
+            size_hint: 0.3, 0.15
+            text: "Submit"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            on_release:
+                root.manager.transition.direction = "left"
+                root.submit()
+        Button:
+            pos_hint:{"x":0.1,"y":0.05}
+            size_hint: 0.3, 0.15
+            text: "Go back"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            on_release: root.back_btn_pressed()
+
+<ShowArtistWindow>:
+    name: "show_artist"
+
+    artist_name: artist_name
+    artist_image: artist_image
+    artist_born: born
+    artist_died: died
+    artist_themes: themes
+    biography: biography
+
+    GridLayout:
+        cols:1
+
+        BoxLayout:
+            cols:2
+            orientation: 'horizontal'
+            canvas.before:
+                Color:
+                    rgba: 0.68, 0.68, 0.40, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                orientation:'vertical'
+                padding: 40, 40
+                height: 10
+                size: root.width, root.height/10
+
+                BackgroundLabel:
+                    id: artist_name
+                    text: "Artist name: "
+                    text_size: self.width, None
+                    font_size: (root.width**2 + root.height**2) / 15**4
+                    size_hint: 1.3, 0.02
+
+                BackgroundLabel:
+                    id: born
+                    text: "Born: "
+                    text_size: self.width, None
+                    font_size: (root.width**2 + root.height**2) / 15**4
+                    size_hint: 1.3, 0.02
+
+                BackgroundLabel:
+                    id: died
+                    text: "Died: "
+                    text_size: self.width, None
+                    font_size: (root.width**2 + root.height**2) / 15**4
+                    size_hint: 1.3, 0.02
+
+                BackgroundLabel:
+                    id: themes
+                    text_size: self.width, None
+                    font_size: (root.width**2 + root.height**2) / 15**4
+                    size_hint: 1.3, 0.05
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'
+                AsyncImage:
+                    id: artist_image
+                    source: str(root.artist_image)
+                    size_hint: .5, 1
+
+
+        ScrollView:
+            Label:
+                id: biography
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                pos_hint: {"x":0, "top":0.6}
+                padding: 40, 40
+                text: ""
+                font_size: (root.width**2 + root.height**2) / 15**4
+        Button:
+            pos_hint:{"x":0.5,"y":0.05}
+            size_hint: 0.3, 0.15
+            text: 'Show Biography'
+            on_release: root.update_bio()
+
+        Button:
+            pos_hint:{"x":0.1,"y":0.05}
+            size_hint: 0.3, 0.15
+            text: "Go back"
+            on_release: root.back_btn_pressed()
