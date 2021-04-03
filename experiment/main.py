@@ -8,6 +8,8 @@ from experiment.database import DataBase
 from kivy.uix.button import Button
 from kivy.properties import NumericProperty, StringProperty, BooleanProperty,\
     ListProperty
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 class ActionOptionsWindow(Screen):
 

@@ -17,8 +17,10 @@ class Artist:
         self.date_seen = self.date_seen.split(",")
 
     def artist_from_json(self, json_obj, location): # wikiart API results
+        #print('getting results from wiki')
         self.artist_name = json_obj["artistName"]
         self.biography = json_obj["biography"]
+        #print(self.biography)
         self.birth_day = json_obj["birthDayAsString"]
         self.death_day = json_obj["deathDayAsString"]
         if not self.death_day:
