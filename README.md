@@ -1,6 +1,6 @@
 # My Art Cave App
 
-This is work in progress. Currently only a skeleton of the code is written and some basic functionalities.
+This is work in progress. Currently only a skeleton of the code is written and some basic functionalities. I am very much open for collaboration!
 
 The purpose of this App is to improve and enhance a person's interaction with Art. It aims at enabling two main capabilities:
 1. Allow the user to learn more about and track the art works that he/she encounters over time and allow to answer questions like:
